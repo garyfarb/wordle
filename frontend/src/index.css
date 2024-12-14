@@ -1,0 +1,20 @@
+body {
+  background: rgb(240, 238, 235);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+hr{
+  border: 1px solid black;
+  width: 50vw;
+  margin-bottom: 20px;
+}
+
+
+.keyboard-container{
+  margin-top: 20px;
+}

@@ -1,0 +1,10 @@
+.letterBox{
+    background-color: hsl(0, 0%, 83%);
+    border: none;
+    border-radius: 8px;
+    padding: 20px 15px;
+    margin: 2px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+}

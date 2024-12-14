@@ -1,0 +1,11 @@
+.box{
+    width: 60px;
+    height: 60px;
+    border: 2px solid hsl(0, 1%, 73%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 3px;
+}
