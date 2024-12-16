@@ -1,31 +1,31 @@
 import LetterBox from "./LetterBox.jsx";
 import styles from '../styles/Keyboard.module.css'
 
-function KeyboardRow(){
+function KeyboardRow( {onLetterClick, onEnter, onBackSpace} ){
     const firstRowLetters = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P']
     const secondRowLetters = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L']
-    const thirdRowLetters = ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BKSPC']
+    const thirdRowLetters = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
 
 
     return(
         <div className={styles.keyboard}>
             <div className={styles.keyboardRow}>
                 {firstRowLetters.map((l, index) => (
-                    <LetterBox key={index} letter={l}/>
+                    <LetterBox key={index} letter={l} onClickFunc={onLetterClick}/>
                 ))}
             </div>
             <div className={styles.keyboardRow}>
                 {secondRowLetters.map((l, index) => (
-                    <LetterBox key={index} letter={l}/>
+                    <LetterBox key={index} letter={l} onClickFunc={onLetterClick}/>
                 ))}
             </div>
             <div className={styles.keyboardRow}>
+                <LetterBox letter='ENTER' onClickFunc={onEnter}/>
                 {thirdRowLetters.map((l, index) => (
-                    <LetterBox key={index} letter={l}/>
+                    <LetterBox key={index} letter={l} onClickFunc={onLetterClick}/>
                 ))}
-            </div>
-
-            
+                <LetterBox letter='BKSPC' onClickFunc={onBackSpace} />
+            </div>            
         </div>
     )
 }

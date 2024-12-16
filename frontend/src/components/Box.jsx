@@ -1,11 +1,11 @@
 import styles from '../styles/Box.module.css'
 
-function Box(){
+function Box({ letter }){
 
 
     return(
         <div className={styles.box}>
-            <p></p>
+            <p>{letter}</p>
         </div>
     )
 }

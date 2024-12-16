@@ -1,10 +1,16 @@
 import styles from '../styles/LetterBox.module.css'
 
-function LetterBox(props){
+function LetterBox({ letter, onClickFunc }){
+    const isSpecialKey = letter === 'ENTER' || letter === 'BKSPC'
 
     return(
         <div>
-            <button className={styles.letterBox}>{props.letter}</button>
+            <button 
+                className={`${styles.letterBox} ${isSpecialKey ? styles.specialKey : ''}`}
+                onClick={() => onClickFunc(letter)}
+            >
+                {letter}
+            </button>
         </div>
     )
 }

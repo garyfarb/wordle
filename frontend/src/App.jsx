@@ -1,5 +1,6 @@
 import Row from './components/Row.jsx'
 import Keyboard from './components/Keyboard.jsx'
+import Board from './components/Board.jsx'
 
 function App() {
 
@@ -10,14 +11,7 @@ function App() {
       </div>
       <hr></hr>
       <div>
-        <Row />
-        <Row />
-        <Row />
-        <Row />
-        <Row />
-      </div>
-      <div className='keyboard-container'>
-        <Keyboard />
+        <Board />
       </div>
     </div> 
   )

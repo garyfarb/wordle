@@ -1,15 +1,13 @@
 import Box from './Box.jsx'
 import styles from '../styles/Row.module.css'
 
-function Row(){
+function Row({ rowLetters }){
 
     return(
         <div className={styles.row}>
-            <Box />
-            <Box />
-            <Box />
-            <Box />
-            <Box />
+            {rowLetters.map((letter, index) => (
+                <Box key={index} letter={letter}/>
+            ))}
         </div>
     )
 }
