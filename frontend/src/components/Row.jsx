@@ -1,12 +1,12 @@
 import Box from './Box.jsx'
 import styles from '../styles/Row.module.css'
 
-function Row({ rowLetters }){
+function Row({ rowEntry }){
 
     return(
         <div className={styles.row}>
-            {rowLetters.map((letter, index) => (
-                <Box key={index} letter={letter}/>
+            {rowEntry.map((guess, index) => (
+                <Box key={index} letter={guess.letter} status={guess.color} updated={guess.isUpdated}/>
             ))}
         </div>
     )
