@@ -3,6 +3,7 @@ import Keyboard from './components/Keyboard.jsx'
 import Board from './components/Board.jsx'
 
 function App() {
+  const wordle = ['A', 'D', 'E', 'L', 'E']
 
   return(
     <div>
@@ -11,7 +12,7 @@ function App() {
       </div>
       <hr></hr>
       <div>
-        <Board />
+        <Board targetWord={wordle}/>
       </div>
     </div> 
   )

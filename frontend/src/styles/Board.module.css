@@ -1,0 +1,17 @@
+.restartButton{
+    border: none;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.restartContainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 5px;
+}
