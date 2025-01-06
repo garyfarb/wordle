@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import Row from './Row.jsx'
 import Keyboard from './Keyboard.jsx'
 import styles from '../styles/Board.module.css'
+import Modal from './Modal.jsx'
 
 function Board({ targetWord }){
     const [guesses, setGuesses] = useState([
@@ -52,6 +53,8 @@ function Board({ targetWord }){
     const currentRowRef = useRef(0)  // current row
     const currentColRef = useRef(0)  // current coloumn
 
+    const [openModal, setOpenModal] = useState(false)
+
     const updateGuess = (letter) => {
         const updatedGuess = [...guesses]
         updatedGuess[currentRowRef.current][currentColRef.current].letter = letter
@@ -84,6 +87,7 @@ function Board({ targetWord }){
 
             if (countGreen === 5) {
                 isCompleteRef.current = 1
+                setOpenModal(true)
                 console.log('Game has been won')
             }
 
@@ -118,6 +122,7 @@ function Board({ targetWord }){
         if (currentRowRef.current === 6 && isCompleteRef !== 1) {
             console.log('Game has been lost')
             isCompleteRef.current = 2
+            setOpenModal(true)
         }
     }
 
@@ -153,6 +158,7 @@ function Board({ targetWord }){
         currentRowRef.current = 0
         currentColRef.current = 0
         isCompleteRef.current = 0
+        setOpenModal(false)
     }
 
     return (
@@ -169,6 +175,7 @@ function Board({ targetWord }){
             <div className={styles.restartContainer}>
                 <button className={styles.restartButton} onClick={handleRestart}>Restart</button>
             </div>
+            <Modal showModal={openModal} onClose={() => setOpenModal(false)} completion={isCompleteRef.current} numGuesses={currentRowRef.current} onPlayAgain={handleRestart} wordle={targetWord}/>
         </div>
     )
 }

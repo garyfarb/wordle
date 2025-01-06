@@ -1,0 +1,52 @@
+.darkBG{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modalContainer {
+    background-color: white;
+    border-radius: 10px;
+    width: 450px;
+    height: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    z-index: 11;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.closeButton{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: red;
+    font-weight: bold;
+}
+
+.playAgainButton{
+    margin-top: 30px;
+    border: none;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 15px;
+    cursor: pointer;
+}

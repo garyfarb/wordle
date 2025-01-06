@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-confetti": "^6.2.2",
+    "react-use": "^17.6.0"
+  }
+}
