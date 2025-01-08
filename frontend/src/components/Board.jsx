@@ -3,8 +3,9 @@ import Row from './Row.jsx'
 import Keyboard from './Keyboard.jsx'
 import styles from '../styles/Board.module.css'
 import Modal from './Modal.jsx'
+import { getRandomWord } from '../utils/wordSelector.js'
 
-function Board({ targetWord }){
+function Board({ wordle }){
     const [guesses, setGuesses] = useState([
         [
             {letter: '', color: 'rgb(240, 238, 235)', isUpdated: false},
@@ -49,6 +50,9 @@ function Board({ targetWord }){
             {letter: '', color: 'rgb(240, 238, 235)', isUpdated: false}
         ]
     ])
+
+    const targetWordRef = useRef(wordle)
+
     const isCompleteRef = useRef(0) // 0 -> currently playing, 1 -> game won, 2 -> game lost
     const currentRowRef = useRef(0)  // current row
     const currentColRef = useRef(0)  // current coloumn
@@ -67,14 +71,14 @@ function Board({ targetWord }){
             const letterMap = new Map()  //count of each letter in the target word 
             let countGreen = 0
 
-            for (const targetLetter of targetWord) {
+            for (const targetLetter of targetWordRef.current) {
                 letterMap.set(targetLetter, (letterMap.get(targetLetter) || 0) + 1)
             }
 
             const updatedRow = [...guesses[currentRowRef.current]]
 
-            for (let i = 0; i < targetWord.length; i++) {
-                if (updatedRow[i].letter === targetWord[i]) {
+            for (let i = 0; i < targetWordRef.current.length; i++) {
+                if (updatedRow[i].letter === targetWordRef.current[i]) {
                     updatedRow[i] = {
                         ...updatedRow[i],
                         color: 'green',
@@ -91,9 +95,9 @@ function Board({ targetWord }){
                 console.log('Game has been won')
             }
 
-            for (let i = 0; i < targetWord.length; i++) {
+            for (let i = 0; i < targetWordRef.current.length; i++) {
                 if (updatedRow[i].color !== 'green') {
-                    if (targetWord.includes(updatedRow[i].letter) && letterMap.get(updatedRow[i].letter) > 0) {
+                    if (targetWordRef.current.includes(updatedRow[i].letter) && letterMap.get(updatedRow[i].letter) > 0) {
                         letterMap.set(updatedRow[i].letter, letterMap.get(updatedRow[i].letter) - 1)
                         updatedRow[i] = {
                             ...updatedRow[i],
@@ -158,6 +162,8 @@ function Board({ targetWord }){
         currentRowRef.current = 0
         currentColRef.current = 0
         isCompleteRef.current = 0
+        targetWordRef.current = Array.from(getRandomWord().toUpperCase())
+        console.log(`New Wordle: ${targetWordRef.current}`)
         setOpenModal(false)
     }
 
@@ -173,9 +179,9 @@ function Board({ targetWord }){
                 <Keyboard onLetterClick={handleLetterClick} onEnter={handleEnter} onBackSpace={handleBackSpace}/>
             </div>
             <div className={styles.restartContainer}>
-                <button className={styles.restartButton} onClick={handleRestart}>Restart</button>
+                <button className={styles.restartButton} onClick={handleRestart}>New Game</button>
             </div>
-            <Modal showModal={openModal} onClose={() => setOpenModal(false)} completion={isCompleteRef.current} numGuesses={currentRowRef.current} onPlayAgain={handleRestart} wordle={targetWord}/>
+            <Modal showModal={openModal} onClose={() => setOpenModal(false)} completion={isCompleteRef.current} numGuesses={currentRowRef.current} onPlayAgain={handleRestart} wordle={targetWordRef.current}/>
         </div>
     )
 }

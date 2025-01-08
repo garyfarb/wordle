@@ -1,9 +1,12 @@
 import Row from './components/Row.jsx'
 import Keyboard from './components/Keyboard.jsx'
 import Board from './components/Board.jsx'
+import { getRandomWord } from './utils/wordSelector.js'
 
 function App() {
-  const wordle = ['A', 'D', 'E', 'L', 'E']
+  const targetWord = Array.from(getRandomWord().toUpperCase())
+  
+  console.log(`Selected Word: ${targetWord}`)
 
   return(
     <div>
@@ -12,7 +15,7 @@ function App() {
       </div>
       <hr></hr>
       <div>
-        <Board targetWord={wordle}/>
+        <Board wordle={targetWord}/>
       </div>
     </div> 
   )
