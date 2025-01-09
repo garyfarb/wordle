@@ -1,8 +1,21 @@
 import styles from '../styles/Modal.module.css'
 import Confetti from 'react-confetti'
+import { useState, useEffect } from 'react'
 
 
 function Modal({ showModal, onClose, completion, numGuesses, onPlayAgain, wordle }){
+
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        if (showModal) {
+            const timer = setTimeout(() => setIsVisible(true), 0)
+            return () => clearTimeout(timer)
+        }
+        else {
+            setIsVisible(false)
+        }
+    }, [showModal])
 
     const formatTries = () => numGuesses > 1 ? 'tries' : 'try'
 
@@ -40,8 +53,8 @@ function Modal({ showModal, onClose, completion, numGuesses, onPlayAgain, wordle
 
     return(
         <div>
-            <div className={styles.darkBG}>
-                <div className={styles.modalContainer}>
+            <div className={`${styles.darkBG} ${isVisible ? styles.show : ''}`}>
+                <div className={`${styles.modalContainer} ${isVisible ? styles.show : ''}`}>
                     <button onClick={onClose} className={styles.closeButton}> X </button>
                     <div className={styles.content}>
                         {content}
