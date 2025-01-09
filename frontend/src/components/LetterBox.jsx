@@ -1,6 +1,6 @@
 import styles from '../styles/LetterBox.module.css'
 
-function LetterBox({ letter, onClickFunc }){
+function LetterBox({ letter, onClickFunc, color }){
     const isSpecialKey = letter === 'ENTER' || letter === 'BKSPC'
 
     return(
@@ -8,6 +8,7 @@ function LetterBox({ letter, onClickFunc }){
             <button 
                 className={`${styles.letterBox} ${isSpecialKey ? styles.specialKey : ''}`}
                 onClick={() => onClickFunc(letter)}
+                style={{ backgroundColor: color || 'hsl(0, 0%, 83%)' }}
             >
                 {letter}
             </button>

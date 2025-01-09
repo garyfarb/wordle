@@ -51,8 +51,19 @@ function Board({ wordle }){
         ]
     ])
 
-    const targetWordRef = useRef(wordle)
+    const resetKeyBoardState = () => {
+        const letters = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('')
+        const keyDefaultColor = 'hsl(0, 0%, 83%)'
+        const initialState = {}
+        letters.forEach(letter => {
+            initialState[letter] = keyDefaultColor
+        })
+        return initialState
+    }
 
+    const [keyboardState, setKeyboardState] = useState({})
+
+    const targetWordRef = useRef(wordle)
     const isCompleteRef = useRef(0) // 0 -> currently playing, 1 -> game won, 2 -> game lost
     const currentRowRef = useRef(0)  // current row
     const currentColRef = useRef(0)  // current coloumn
@@ -66,10 +77,11 @@ function Board({ wordle }){
     } 
 
     const handleEnter = () => {
-        if (currentColRef.current === 5 && isCompleteRef.current === 0) {
+        if (currentColRef.current === 5 && isCompleteRef.current === 0) {  // can only enter once the row has been filled out
 
             const letterMap = new Map()  //count of each letter in the target word 
             let countGreen = 0
+            const updatedKeyboardState = { ...keyboardState }
 
             for (const targetLetter of targetWordRef.current) {
                 letterMap.set(targetLetter, (letterMap.get(targetLetter) || 0) + 1)
@@ -77,6 +89,7 @@ function Board({ wordle }){
 
             const updatedRow = [...guesses[currentRowRef.current]]
 
+            // first pass: check for all green letters
             for (let i = 0; i < targetWordRef.current.length; i++) {
                 if (updatedRow[i].letter === targetWordRef.current[i]) {
                     updatedRow[i] = {
@@ -84,25 +97,33 @@ function Board({ wordle }){
                         color: 'green',
                         isUpdated: true
                     }
+                    updatedKeyboardState[updatedRow[i].letter] = 'hsl(110, 40.70%, 50.40%)'
                     countGreen += 1
+                    // update letter map for number of green positions for a letter remaining
                     letterMap.set(updatedRow[i].letter, letterMap.get(updatedRow[i].letter) - 1)
                 }
             }
 
+            // check if game is won by counting number of greens
             if (countGreen === 5) {
                 isCompleteRef.current = 1
                 setOpenModal(true)
                 console.log('Game has been won')
             }
 
+            // check for any yellow letters
             for (let i = 0; i < targetWordRef.current.length; i++) {
                 if (updatedRow[i].color !== 'green') {
+                    // account for any repeated yellow letters
                     if (targetWordRef.current.includes(updatedRow[i].letter) && letterMap.get(updatedRow[i].letter) > 0) {
                         letterMap.set(updatedRow[i].letter, letterMap.get(updatedRow[i].letter) - 1)
                         updatedRow[i] = {
                             ...updatedRow[i],
                             color: 'yellow',
                             isUpdated: true
+                        }
+                        if (updatedKeyboardState[updatedRow[i].letter] !== 'hsl(110, 40.70%, 50.40%)') {
+                            updatedKeyboardState[updatedRow[i].letter] = 'rgb(240, 191, 76)'
                         }
                     }
                     else{
@@ -111,6 +132,9 @@ function Board({ wordle }){
                             color: 'grey',
                             isUpdated: true
                         }
+                        if (!updatedKeyboardState[updatedRow[i].letter]) {
+                            updatedKeyboardState[updatedRow[i].letter] = 'hsl(0, 0%, 63%)'
+                        }
                     }
                 }
             }
@@ -118,6 +142,7 @@ function Board({ wordle }){
             const updatedGuesses = [...guesses]
             updatedGuesses[currentRowRef.current] = updatedRow
             setGuesses(updatedGuesses)
+            setKeyboardState(updatedKeyboardState)
 
             currentRowRef.current += 1
             currentColRef.current = 0
@@ -131,7 +156,7 @@ function Board({ wordle }){
     }
 
     const handleBackSpace = () => {
-        if (currentColRef.current > 0 && currentRowRef.current < 5 && isCompleteRef.current === 0) {
+        if (currentColRef.current > 0 && currentRowRef.current < 6 && isCompleteRef.current === 0) {
             currentColRef.current -= 1
             const updatedGuess = updateGuess('')
             setGuesses(updatedGuess)
@@ -159,6 +184,7 @@ function Board({ wordle }){
         ) 
 
         setGuesses(defaultGuesses)
+        setKeyboardState({})
         currentRowRef.current = 0
         currentColRef.current = 0
         isCompleteRef.current = 0
@@ -176,7 +202,7 @@ function Board({ wordle }){
                 <Row rowEntry={guesses[3]}/>
                 <Row rowEntry={guesses[4]}/>
                 <Row rowEntry={guesses[5]}/>
-                <Keyboard onLetterClick={handleLetterClick} onEnter={handleEnter} onBackSpace={handleBackSpace}/>
+                <Keyboard onLetterClick={handleLetterClick} onEnter={handleEnter} onBackSpace={handleBackSpace} keyboardState={keyboardState}/>
             </div>
             <div className={styles.restartContainer}>
                 <button className={styles.restartButton} onClick={handleRestart}>New Game</button>
