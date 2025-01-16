@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Row from './Row.jsx'
 import Keyboard from './Keyboard.jsx'
 import styles from '../styles/Board.module.css'
@@ -51,15 +51,7 @@ function Board({ wordle }){
         ]
     ])
 
-    const resetKeyBoardState = () => {
-        const letters = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('')
-        const keyDefaultColor = 'hsl(0, 0%, 83%)'
-        const initialState = {}
-        letters.forEach(letter => {
-            initialState[letter] = keyDefaultColor
-        })
-        return initialState
-    }
+    
 
     const [keyboardState, setKeyboardState] = useState({})
 
@@ -192,6 +184,31 @@ function Board({ wordle }){
         console.log(`New Wordle: ${targetWordRef.current}`)
         setOpenModal(false)
     }
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // clear document of active elements
+            document.activeElement.blur()
+
+            const key = e.key.toUpperCase()
+
+            if (/^[A-Z]$/.test(key)) {
+                handleLetterClick(key)
+            }
+            else if (key === 'ENTER'){
+                handleEnter()
+            }
+            else if (key === 'BACKSPACE') {
+                handleBackSpace()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [handleLetterClick, handleEnter, handleBackSpace])
 
     return (
         <div>
