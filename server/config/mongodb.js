@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import User from './userSchema.js'
+import User from '../models/userSchema.js'
 import 'dotenv/config'
 
 const uri = process.env.ATLAS_URI
