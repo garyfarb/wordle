@@ -1,4 +1,4 @@
-import { connectDB, populateUsers } from "../modules/mongodb.js";
+import { connectDB, populateUsers } from "../config/mongodb.js";
 import mockUsers from "./mockUsers.js";
 
 try {

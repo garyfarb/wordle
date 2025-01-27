@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import { connectDB } from './config/mongodb.js'
 import authRoutes from './routes/authRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(express.json())
 await connectDB()
 
 app.use('/auth', authRoutes)
+app.use('/user', userRoutes)
 
 app.listen(PORT, () => {
     console.log(`Port: ${process.env.PORT}`)

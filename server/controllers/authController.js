@@ -18,17 +18,13 @@ const registerUser = async (req, res) => {
         const newUser = new User({ 
             username,
             email,
-            password: hashedPassword ,
-            statistics: {
-                gamesPlayed: 0,
-                gamesWon: 0,
-                guessDistribution: []
-            }
+            password: hashedPassword
         })
         await newUser.save()
 
         res.status(201).json({
-            message: "User registered successfully"
+            message: "User registered successfully",
+            user: newUser
         })
     } catch (err) {
         res.status(500).json({

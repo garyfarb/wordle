@@ -26,7 +26,7 @@ const mockUsers = [
       "statistics": {
         "gamesPlayed": 1,
         "gamesWon": 0,
-        "guessDistribution": []
+        "guessDistribution": [0, 0, 0, 0, 0, 0]
       }
     },
     {
@@ -36,7 +36,7 @@ const mockUsers = [
       "statistics": {
         "gamesPlayed": 3,
         "gamesWon": 3,
-        "guessDistribution": [2, 4, 6]
+        "guessDistribution": [0, 0, 0, 0, 0, 0]
       }
     },
     {
@@ -46,7 +46,7 @@ const mockUsers = [
       "statistics": {
         "gamesPlayed": 21,
         "gamesWon": 7,
-        "guessDistribution": [1, 4, 5, 2, 3, 3, 3]
+        "guessDistribution": [0, 0, 0, 0, 0, 0]
       }
     }
 ]

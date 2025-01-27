@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         },
         guessDistribution: {
             type: [Number],
-            default: []
+            default: [0, 0, 0, 0, 0, 0]
         }
     }
 })
